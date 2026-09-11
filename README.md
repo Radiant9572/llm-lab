@@ -4,7 +4,9 @@
 
 目标：用 26 周时间，从零实现到能跑通完整的后训练流水线，并留下可复现的实验记录。
 
-**进度**：W1 完成中 → 26 周计划见 [`PLAN.md`](PLAN.md)
+**进度**：W1 ✅ 完成（09.11 提前 3 天）→ 26 周计划见 [`PLAN.md`](PLAN.md)
+
+**仓库**：https://github.com/Radiant9572/llm-lab ｜ 记录规范见 [`docs/github_workflow.md`](docs/github_workflow.md)
 
 ## 环境
 
