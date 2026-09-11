@@ -1,0 +1,23 @@
+# 统一行尾，避免 Windows / Linux 之间来回 checkout 产生整文件 diff
+* text=auto
+
+*.py    text eol=lf
+*.md    text eol=lf
+*.txt   text eol=lf
+*.sh    text eol=lf
+*.yaml  text eol=lf
+*.yml   text eol=lf
+*.json  text eol=lf
+*.toml  text eol=lf
+
+# 二进制，不做行尾转换
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.pdf   binary
+*.pt    binary
+*.bin   binary
+*.safetensors binary
+
+# 让 GitHub 的语言统计别把 notebook 算成主体
+*.ipynb linguist-detectable=false
