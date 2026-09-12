@@ -30,7 +30,13 @@ class Solution:
             for j in range(i + 1, len(nums)):
                 if nums[j] == target_number:
                     return [i, j]
-#哈希表写法
+# ============================================================================
+# ↓ 这版是参考题解，不是我独立写出来的
+#   所以 docstring 的「结果」栏保持"看题解后做出"，不要改成"独立做出"
+#
+#   重写打卡：____ 月 ____ 日   用时 ____ 分钟   不看题解独立写完 ☐
+#   打卡通过后，才把结果栏改成"独立做出"，并补一句"第一次卡在哪"
+# ============================================================================
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
         #哈希表
@@ -50,3 +56,8 @@ class Solution:
         return []
 
 #我尝试自己写出哈希表解法，但是用了15min分钟没有得到正确答案，原因是我不知道enumerate这个方法以及不懂哈希表的语法规则。
+#
+#（补充，2026-09-12）上面这段"我没写出来"是事实，保留。
+#   但要注意：`enumerate` 只是让代码好看，真正卡住我的是
+#   `dict1[target-item]` / `dict1[item] = index` 这套语法 ——
+#   这正好是 python_drill.py 的 ex09/ex16 和 PYTHON_CHEATSHEET.md 第 3 节的内容。
