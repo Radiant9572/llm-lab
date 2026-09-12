@@ -30,3 +30,23 @@ class Solution:
             for j in range(i + 1, len(nums)):
                 if nums[j] == target_number:
                     return [i, j]
+#哈希表写法
+class Solution:
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+        #哈希表
+        #1.定义哈希表，key为元素值，value为数组下标
+        dict1 = {}
+
+        #2.遍历数组
+        for index,item in enumerate(nums):
+            #3.判断哈希表中有无符合要求的另一个数
+            if (target-item) in dict1:
+                return [index,dict1[target-item]]
+            #4.没有则加入哈希表
+            else:
+                dict1[item] = index
+
+        #5.未找到返回[]
+        return []
+
+#我尝试自己写出哈希表解法，但是用了15min分钟没有得到正确答案，原因是我不知道enumerate这个方法以及不懂哈希表的语法规则。
