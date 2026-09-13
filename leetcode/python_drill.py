@@ -40,13 +40,14 @@ def ex01_enumerate() -> list[tuple[int, str]]:
          for i, ch in enumerate(x):
     """
     # 填空 1/22 —— 把下一行替换成你的代码
-    return _todo("ex01")
+
+    return [(i,x) for i,x in enumerate(["a","b","c"])]
 
 
 def ex02_enumerate_start() -> list[tuple[int, str]]:
     """同上，但下标从 1 开始：[(1,"a"), (2,"b"), (3,"c")]。"""
     # 填空 2/22
-    return _todo("ex02")
+    return [(i,x) for i,x in enumerate(["a","b","c"],1)]
 
 
 def ex03_zip() -> list[tuple[int, str]]:
@@ -55,7 +56,7 @@ def ex03_zip() -> list[tuple[int, str]]:
     提示：zip 返回的是迭代器，要 list() 一下才是列表
     """
     # 填空 3/22
-    return _todo("ex03")
+    return list((a,b) for a,b in zip([1,2,3],["a","b","c"]))
 
 
 def ex04_reverse_range() -> list[int]:
@@ -64,7 +65,7 @@ def ex04_reverse_range() -> list[int]:
     提示：range(stop, stop, -1)
     """
     # 填空 4/22
-    return _todo("ex04")
+    return [i for i in range(3,-1,-1)]
 
 
 # ==========================================================================
@@ -76,7 +77,7 @@ def ex05_sorted_returns_new(original: list[int]) -> tuple[list[int], list[int]]:
     返回 (排序结果, 排序后原列表) —— 所以第二个应该还是原样。
     """
     # 填空 5/22 —— 把下一行替换成你的代码（提示：sorted(original)）
-    srt = _todo("ex05")
+    srt = sorted(original)
     return srt, original
 
 
@@ -86,7 +87,7 @@ def ex06_sorted_by_length(words: list[str]) -> list[str]:
     提示：key=len —— key 接收一个**函数**，不是调用结果
     """
     # 填空 6/22
-    return _todo("ex06")
+    return sorted(words,key=len)
 
 
 def ex07_sorted_by_key_lambda(pairs: list[tuple[str, int]]) -> list[tuple[str, int]]:
@@ -95,7 +96,7 @@ def ex07_sorted_by_key_lambda(pairs: list[tuple[str, int]]) -> list[tuple[str, i
     提示：key=lambda p: p[1]  配合 reverse=True
     """
     # 填空 7/22
-    return _todo("ex07")
+    return sorted(pairs,key=lambda p: p[1],reverse=True)
 
 
 def ex08_sorted_dict_by_value(counts: dict[str, int]) -> list[tuple[str, int]]:
@@ -105,7 +106,7 @@ def ex08_sorted_dict_by_value(counts: dict[str, int]) -> list[tuple[str, int]]:
         （这一步是 692、347 那类"前 K 个高频元素"题的通用开头）
     """
     # 填空 8/22
-    return _todo("ex08")
+    return sorted(counts.items(),key = lambda p: p[1],reverse=True)
 
 
 # ==========================================================================
@@ -117,7 +118,7 @@ def ex09_get_default() -> int:
     提示：d.get(key, default) —— **不要写 d["b"]，那会直接 KeyError**
     """
     # 填空 9/22
-    return _todo("ex09")
+    return {"a": 1}.get("b", 0)
 
 
 def ex10_count_words(words: list[str]) -> dict[str, int]:
@@ -128,7 +129,10 @@ def ex10_count_words(words: list[str]) -> dict[str, int]:
             d[w] = d.get(w, 0) + 1
     """
     # 填空 10/22
-    return _todo("ex10")
+    d = {}
+    for w in words:
+        d[w] = d.get(w,0)+1
+    return d
 
 
 def ex11_group_by_setdefault(pairs: list[tuple[str, int]]) -> dict[str, list[int]]:
@@ -137,7 +141,10 @@ def ex11_group_by_setdefault(pairs: list[tuple[str, int]]) -> dict[str, list[int
     提示：d.setdefault(k, []).append(v) —— 一行顶三行
     """
     # 填空 11/22
-    return _todo("ex11")
+    d = {}
+    for w in pairs:
+        d.setdefault(w[0],[]).append(w[1])
+    return d
 
 
 # ==========================================================================
@@ -151,7 +158,10 @@ def ex12_defaultdict_group(words: list[str]) -> dict[str, list[str]]:
          最后要 dict(dd) 转回普通 dict 才能和期望值比较
     """
     # 填空 12/22
-    return _todo("ex12")
+    dd = collections.defaultdict(list)
+    for w in words:
+        dd[w[0]].append(w)
+    return dict(dd)
 
 
 def ex13_counter_top2(words: list[str]) -> list[tuple[str, int]]:
@@ -160,7 +170,7 @@ def ex13_counter_top2(words: list[str]) -> list[tuple[str, int]]:
     提示：Counter(words).most_common(2)
     """
     # 填空 13/22
-    return _todo("ex13")
+    return collections.Counter(words).most_common(2)
 
 
 def ex14_counter_equal(s: str, p: str) -> bool:
@@ -169,7 +179,7 @@ def ex14_counter_equal(s: str, p: str) -> bool:
     提示：Counter(s) == Counter(p) —— 这也是 D9（438 题）的核心工具
     """
     # 填空 14/22
-    return _todo("ex14")
+    return collections.Counter(s) == collections.Counter(p) 
 
 
 # ==========================================================================
@@ -181,7 +191,7 @@ def ex15_set_dedupe(nums: list[int]) -> list[int]:
     提示：set(nums) 去重，但 set 无序，所以外面再套一层 sorted()
     """
     # 填空 15/22
-    return _todo("ex15")
+    return sorted(set(nums))
 
 
 def ex16_in_check(nums: list[int]) -> bool:
@@ -191,7 +201,8 @@ def ex16_in_check(nums: list[int]) -> bool:
     **这就是你昨天写的"用空间换时间"的本质。**
     """
     # 填空 16/22
-    return _todo("ex16")
+    s = set(nums)
+    return 3 in s
 
 
 def ex17_set_ops(a: list[int], b: list[int]) -> tuple[list[int], list[int]]:
@@ -200,7 +211,11 @@ def ex17_set_ops(a: list[int], b: list[int]) -> tuple[list[int], list[int]]:
     提示：集合运算符 & 和 |
     """
     # 填空 17/22
-    return _todo("ex17")
+    s_a = set(a)
+    s_b = set(b)
+    s_1 = s_a & s_b
+    s_2 = s_a | s_b
+    return sorted(s_1),sorted(s_2)
 
 
 # ==========================================================================
@@ -216,7 +231,8 @@ def ex18_canonical(w: str) -> str:
     注意：字符串没有 .sort()，因为字符串不可变
     """
     # 填空 18/22
-    return _todo("ex18")
+    n_w = "".join(sorted(w))
+    return n_w
 
 
 def ex19_split_join(s: str) -> str:
@@ -225,7 +241,8 @@ def ex19_split_join(s: str) -> str:
     提示：join 是**分隔符.join(列表)**，别写反了
     """
     # 填空 19/22
-    return _todo("ex19")
+    n_s = "-".join(s.split())
+    return n_s
 
 
 def ex20_str_immutable(s: str) -> str:
@@ -233,8 +250,10 @@ def ex20_str_immutable(s: str) -> str:
 
     提示：字符串不可变，必须先 list(s) 改完再 "".join() 回来
     """
-    # 填空 20/22
-    return _todo("ex20")
+    l = list(s)
+    l[0] = l[0].upper()
+    n_s = "".join(l)
+    return n_s
 
 
 # ==========================================================================
@@ -246,7 +265,7 @@ def ex21_list_comp(nums: list[int]) -> list[int]:
     提示：[f(x) for x in xs if 条件]
     """
     # 填空 21/22
-    return _todo("ex21")
+    return [2*x for x in nums if x%2==0]
 
 
 def ex22_slice_reverse(nums: list[int]) -> list[int]:
@@ -255,7 +274,7 @@ def ex22_slice_reverse(nums: list[int]) -> list[int]:
     提示：nums[::-1]
     """
     # 填空 22/22
-    return _todo("ex22")
+    return nums[::-1]
 
 
 # ==========================================================================

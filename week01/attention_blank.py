@@ -20,7 +20,7 @@ W1 · 空白版（第二次重写用）
 重写记录（每次写完记一行，看得见的进步才有动力）
 ================================================================
 第 1 次：__2026____ 年 _9__ 月 __11_ 日    用时 ___8___ 分钟    结果 _9__ / 9
-第 2 次：______ 年 ___ 月 ___ 日    用时 ______ 分钟    结果 ___ / 9
+第 2 次：___2026___ 年 _9__ 月 __13_ 日    用时 ___7___ 分钟    结果 _8__ / 9
 第 3 次：______ 年 ___ 月 ___ 日    用时 ______ 分钟    结果 ___ / 9
 
 （目标：第 3 次能在 10 分钟内、不查任何资料、9/9 通过）
@@ -44,10 +44,9 @@ def _blank(where: str):
 # ==========================================================================
 def stable_softmax(x: torch.Tensor, dim: int = -1) -> torch.Tensor:
     """沿 dim 维做 softmax，返回同形状张量，要求数值稳定。"""
-    x_max = x.max(dim=dim,keepdim=True).values
+    x_max = x.max(dim=-1,keepdim=True).values
     e = torch.exp(x-x_max)
-
-    return e/e.sum(dim=dim,keepdim=True)
+    return e/e.sum(dim=-1,keepdim=True)
 
 
 # ==========================================================================
@@ -69,18 +68,14 @@ def scaled_dot_product_attention(
     d_k = Q.size(-1)
 
     # 填空 2/6
-    scores = (Q@K.transpose(-1,-2))/math.sqrt(d_k)
-
+    scores = (Q @ K.transpose(-1,-2))/math.sqrt(d_k)
     # 填空 3/6
-    if mask is not None:
-        scores = scores.masked_fill(~mask,float("-inf"))
-
+    scores = scores.masked_fill(~mask,float("-inf"))
     # 填空 4/6
     attn = stable_softmax(scores,-1)
 
     # 填空 5/6
-    out = attn@V
-
+    out = attn @ V
     return out
 
 
@@ -93,9 +88,10 @@ def make_causal_mask(seq_len: int) -> torch.Tensor:
     语义：位置 i 只能看到 j <= i（不能看未来）。
     """
     # 填空 6/6
+
     row = torch.arange(seq_len).view(-1,1)
     col = torch.arange(seq_len).view(1,-1)
-    return row>=col
+    return row >= col
 
 
 # ==========================================================================
