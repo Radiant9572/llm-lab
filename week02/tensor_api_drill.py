@@ -60,7 +60,7 @@ def _todo(where: str):
 def ex01_zeros():
     """返回一个 2 行 3 列的全 0 张量（float32）。"""
     # 填空 1/20
-    return _todo("ex01")
+    return torch.zeros(2,3)
 
 
 def ex02_arange():
@@ -70,7 +70,7 @@ def ex02_arange():
         ⚠️ int 张量和 float 张量混着算会报 dtype 不匹配
     """
     # 填空 2/20
-    return _todo("ex02")
+    return torch.arange(5,dtype=torch.float32)
 
 
 def ex03_randn_seeded():
@@ -80,7 +80,7 @@ def ex03_randn_seeded():
         （测试会连调两次，比较是否完全相同 —— 做实验时这一步不能省）
     """
     # 填空 3/20
-    return _todo("ex03")
+    return (torch.manual_seed(42),torch.randn(2,3))[1]
 
 
 def ex04_from_list():
@@ -90,7 +90,7 @@ def ex04_from_list():
         torch.tensor 是「拷贝一份」；torch.as_tensor 是「共享内存，不复制」
     """
     # 填空 4/20
-    return _todo("ex04")
+    return torch.tensor([[1,2],[3,4]],dtype=torch.float32)
 
 
 # ==========================================================================
@@ -103,7 +103,8 @@ def ex05_view_col():
         也可以 x.unsqueeze(-1)，两种都行
     """
     # 填空 5/20
-    return _todo("ex05")
+    x = torch.arange(5,dtype=torch.float32)
+    return x.view(-1,1)
 
 
 def ex06_unsqueeze():
@@ -112,7 +113,8 @@ def ex06_unsqueeze():
     提示：unsqueeze(0) 在最前面插一维；unsqueeze(-1) 在最后面插
     """
     # 填空 6/20
-    return _todo("ex06")
+    x = torch.zeros(3,4)
+    return x.unsqueeze(0)
 
 
 def ex07_transpose():
@@ -122,7 +124,8 @@ def ex07_transpose():
         ⚠️ 别写成 transpose(-1.-2) —— 那在 Python 里是个浮点数，会报 "must be int"
     """
     # 填空 7/20
-    return _todo("ex07")
+    x = torch.zeros(2,3,4)
+    return x.transpose(-1,-2)
 
 
 def ex08_max_keepdim():
@@ -132,7 +135,8 @@ def ex08_max_keepdim():
         ⚠️ 返回的是 namedtuple，要取 `.values` 才是张量
     """
     # 填空 8/20
-    return _todo("ex08")
+    x = torch.zeros(2,3,4)
+    return x.max(dim=-1,keepdim=True).values
 
 
 # ==========================================================================
@@ -145,7 +149,8 @@ def ex09_exp_then_log():
     提示：torch.exp(x) / torch.log(x)，逐元素运算，形状不变
     """
     # 填空 9/20
-    return _todo("ex09")
+    x = torch.tensor([[1.,2.],[3.,4.]])
+    return torch.log(torch.exp(x))
 
 
 def ex10_sin_tensor():
@@ -156,7 +161,8 @@ def ex10_sin_tensor():
       位置编码里的 sin 必须用 torch.sin。
     """
     # 填空 10/20
-    return _todo("ex10")
+    x = torch.zeros(2,2)
+    return torch.sin(x)
 
 
 def ex11_sum_keepdim():
@@ -166,7 +172,8 @@ def ex11_sum_keepdim():
         不写 keepdim 会得到形状 (3,) —— 这就是"归约后形状丢了"的经典问题
     """
     # 填空 11/20
-    return _todo("ex11")
+    x = torch.zeros(2,3)
+    return x.sum(dim=0,keepdim=True)
 
 
 def ex12_matmul():
@@ -176,7 +183,9 @@ def ex12_matmul():
         矩阵乘**只作用在最后两维**，前面的维度按广播规则对齐
     """
     # 填空 12/20
-    return _todo("ex12")
+    x = torch.zeros(2,3)
+    y = torch.zeros(3,4)
+    return x@y
 
 
 def ex13_broadcast_mul():
@@ -186,7 +195,9 @@ def ex13_broadcast_mul():
     位置编码那行 `pos * omega`（(L,1) × (d/2,)）走的是同一套规则。
     """
     # 填空 13/20
-    return _todo("ex13")
+    x = torch.zeros(2,3,1)
+    y = torch.zeros(4)
+    return x*y
 
 
 # ==========================================================================
@@ -198,7 +209,8 @@ def ex14_slice_read():
     提示：x[:, 0::2] —— 语法是 起:止:步长，省略「止」就是到末尾
     """
     # 填空 14/20
-    return _todo("ex14")
+    x = torch.zeros(4,6)
+    return x[:,0::2]
 
 
 def ex15_slice_write():
@@ -215,7 +227,10 @@ def ex15_slice_write():
     ⚠️ 右边可以是标量或能广播的张量，但**不能改变形状**
     """
     # 填空 15/20
-    return _todo("ex15")
+    x = torch.zeros(4,4)
+    x[:,0::2]=1
+    x[:,1::2]=2
+    return x
 
 
 def ex16_masked_fill():
@@ -226,7 +241,8 @@ def ex16_masked_fill():
         你 W1 写的因果掩码用的是同一个方法：`scores.masked_fill(~mask, -inf)`
     """
     # 填空 16/20
-    return _todo("ex16")
+    x = torch.tensor([[1.0,-2.],[-3.,4.]])
+    return x.masked_fill(x<0,0.0)
 
 
 # ==========================================================================
@@ -240,7 +256,8 @@ def ex17_linear_params():
         用 sum(p.numel() for p in layer.parameters())
     """
     # 填空 17/20
-    return _todo("ex17")
+
+    return sum(p.numel() for p in nn.Linear(8,16).parameters())
 
 
 def ex18_embedding_shape():
@@ -253,7 +270,9 @@ def ex18_embedding_shape():
         ⚠️ Embedding 的输入必须是整数类型（long），传 float 会报错
     """
     # 填空 18/20
-    return _todo("ex18")
+    emb = nn.Embedding(100, 16)
+    out = emb(torch.zeros(2, 5, dtype=torch.long))
+    return sum(p.numel() for p in emb.parameters()), tuple(out.shape)
 
 
 def ex19_min_module():

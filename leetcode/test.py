@@ -1,3 +1,7 @@
-a = [1,2,3,47,8,2,1,3,99,45]
-print(set(a))
-print(sorted(set(a)))
+import torch
+
+x = torch.zeros(2,3,1)
+x = x+2
+y = torch.zeros(4)
+y = y+3
+print(x*y)
