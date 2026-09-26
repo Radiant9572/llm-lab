@@ -116,6 +116,20 @@ def build(today: dt.date, plain: bool = False) -> str:
             if w["accept"]:
                 lines.append("  验收：" + w["accept"])
 
+        # 并行线（2026-09-26 v2：目标改为「大模型方向的寒假实习」）
+        extras: list[str] = []
+        if today <= dt.date(2026, 10, 25):
+            extras.append("SQL · 3 小时/周（底线：JOIN / 子查询 / 窗口函数能写）")
+        if today >= dt.date(2026, 10, 18):
+            extras.append("投递 · 大模型实习，简历 v1 可用（滚动招聘，招满即止）")
+        if today >= dt.date(2026, 11, 23):
+            extras.append("投递 · 简历 v2 定稿，大规模投递")
+        if extras:
+            lines.append("")
+            lines.append("【并行】")
+            for e in extras:
+                lines.append("  [ ] " + e)
+
         # 今日刷题
         if SCHEDULE.exists():
             sched = parse_schedule(SCHEDULE.read_text(encoding="utf-8"))
