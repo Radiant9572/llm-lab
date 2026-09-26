@@ -497,14 +497,22 @@ def experiment_scale():
     print("实验 · 改配置，参数量怎么变？")
     print("=" * 70)
     rows = []
-    for d_model, n_head, n_layer, tag in [
-        (64, 4, 2, "默认"),
-        (64, 4, 4, "层数 ×2"),
-        (128, 4, 2, "d_model ×2"),
-        (128, 8, 2, "d_model + 头数都 ×2"),
-    ]:
-        cfg = GPTConfig(d_model=d_model, n_head=n_head, n_layer=n_layer)
-        rows.append((tag, cfg, theoretical_parameter_count(cfg)))
+    try:
+        for d_model, n_head, n_layer, tag in [
+            (64, 4, 2, "默认"),
+            (64, 4, 4, "层数 ×2"),
+            (128, 4, 2, "d_model ×2"),
+            (128, 8, 2, "d_model + 头数都 ×2"),
+        ]:
+            cfg = GPTConfig(d_model=d_model, n_head=n_head, n_layer=n_layer)
+            rows.append((tag, cfg, theoretical_parameter_count(cfg)))
+    except NotImplementedError:
+        # 这个实验依赖 theoretical_parameter_count，没填就跑不了 —— 但不该让整个脚本崩掉
+        print()
+        print("  （需要先填 theoretical_parameter_count，填完再回来看）")
+        print("  预告：d_model 翻倍 → 参数量 ×4；层数翻倍 → ×2。")
+        print("        所以「模型变大」主要是加宽，不是加深。")
+        return
     print("  ┌──────────────┬─────────┬────────┬────────┬──────────────┐")
     print("  │ 配置         │ d_model │ n_head │ n_layer│ 理论参数量   │")
     print("  ├──────────────┼─────────┼────────┼────────┼──────────────┤")
