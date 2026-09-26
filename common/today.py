@@ -145,6 +145,7 @@ def build(today: dt.date, plain: bool = False) -> str:
         # 固定动作
         lines.append("")
         lines.append("【固定动作】")
+        lines.append("  [ ] 健身 1.5 小时 —— 固定锚点，不在可砍清单里")
         lines.append(f"  [ ] 日报 journal/{today:%Y-%m-%d}.md（≤10 行，重点是「卡点/报错」那一栏）")
         lines.append("  [ ] 提交：git add -A && git commit && git push")
         if today.weekday() == 6:
