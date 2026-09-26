@@ -37,6 +37,34 @@ E:\Anaconda\envs\llm\python.exe E:\llm-lab\common\today.py
    而定时任务运行时没有人在场，一确认就会卡住。所以自动任务永远走追加。
 3. **`today.py` 报错就跳过本次**，不要往文档里写空段落。
 
+### 追加命令（已实测，2026-09-26 晚）
+
+```powershell
+python "<library skill>\doc\submit_doc_edit.py" `
+  --page-id 5i0BAIAJa9hh6ueZOzCMib `
+  --actions-file <actions.json> --dry-run      # 先干跑
+```
+
+`actions.json` 里追加一段用：
+
+```json
+[{"type":"insert_after","id":"","content":"<Heading level=\"2\">…</Heading>\n\n<Todo>待办一</Todo>\n\n<Todo>待办二</Todo>"}]
+```
+
+- `insert_after` 的 `id` 传**空字符串**＝追加到文档末尾
+- `content` 必须是**组件块**（`<Heading level="2">` / `<Todo>` / `<Paragraph>`），不是 Markdown
+- 连续多个 `<Todo>` 会自动显示成一个待办清单
+- 实测结果：19 处改动一次成功，无需审阅
+
+### ⚠️ 定时任务的一个语义坑
+
+**`validFrom` 的首次运行 = validFrom + 1 天**（实测两轮确认）。
+所以要首跑在 X 日，`validFrom` 必须填 **X−1 日**。
+
+当前任务 `f9498e4d-0b69-473e-b085-40003d9f8a88`：
+`validFrom = 2026-09-27` → **首次运行 2026-09-28 07:30**（W1 第一天）。
+09-27（周日）那天的清单已由人工写入文档，所以不会漏也不会重复。
+
 ## 每天追加的段落格式
 
 ```markdown
